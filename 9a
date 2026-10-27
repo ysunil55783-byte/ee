@@ -1,0 +1,30 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+public class DatabaseConnectionExample 
+{
+private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydatabase";
+private static final String USERNAME = "root";
+private static final String PASSWORD = "password";
+public static void main(String[] args) 
+{
+try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) 
+{
+            Statement statement = connection.createStatement();
+String sqlQuery = "SELECT * FROM users";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+while (resultSet.next()) 
+{
+int id = resultSet.getInt("id");
+                String username = resultSet.getString("username");
+                String email = resultSet.getString("email");
+System.out.println("User ID: " + id + ", Username: " + username + ", Email: " + email);
+            }
+        } 
+catch (SQLException e) {
+e.printStackTrace();
+        }
+    }
+}
